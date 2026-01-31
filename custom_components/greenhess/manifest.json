@@ -1,7 +1,7 @@
 {
   "domain": "greenhess",
   "name": "ADA Family Meters VII",
-  "codeowners": ["@greenhess"],
+  "codeowners": ["@Iminet72"],
   "config_flow": true,
   "dependencies": [],
   "documentation": "https://github.com/@greenhess/adap1meter",
