@@ -17,28 +17,6 @@ You can find the original here:
 
 Thanks for Grennhess Kft
 
-## ⚠️ Important: Domain Renamed (bhsoft → adap1ii)
-
-**If you are upgrading from an older version**, please note that the integration domain has been changed from `bhsoft` to `adap1ii`.
-
-### Automatic Migration
-
-Good news! The migration is **automatic**:
-
-1. **Backup your Home Assistant configuration** before updating (important!)
-2. Install the update through HACS or your installation method
-3. Restart Home Assistant
-4. The migration shim will automatically create new config entries under the `adap1ii` domain
-5. Verify your devices and sensors work correctly
-6. After verification, you can safely remove the old `bhsoft` config entries
-
-### Migration Details
-
-- A migration shim is included that runs on startup
-- Your existing configuration (host, port, settings) will be preserved
-- Detailed migration logs will be written to help you track the process
-- See [MIGRATION.md](MIGRATION.md) for complete migration guide and troubleshooting
-
 ## License
 
 This project is licensed under the MIT License.
