@@ -7,7 +7,7 @@ import async_timeout
 
 from .product_config import get_product_list, get_product_name, get_product_sensors, PRODUCT_CONFIGS
 
-DOMAIN = "bhsoft"
+DOMAIN = "adap1ii"
 _LOGGER = logging.getLogger(__name__)
 
 
