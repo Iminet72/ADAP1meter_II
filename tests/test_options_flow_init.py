@@ -49,12 +49,29 @@ def test_options_flow_handler_init():
             print("  ERROR: super().__init__(config_entry) found - this will cause TypeError!")
         return False
     
-    # Verify self.config_entry is assigned
-    if 'self.config_entry = config_entry' in init_content:
-        print("✓ self.config_entry is assigned correctly")
+    # Verify config_entry is stored (either directly or in private attribute)
+    if 'self._config_entry_data = config_entry' in init_content:
+        print("✓ config_entry is stored in private attribute (recommended)")
+    elif 'self.config_entry = config_entry' in init_content:
+        print("✓ self.config_entry is assigned directly")
     else:
-        print("✗ self.config_entry is not assigned")
+        print("✗ config_entry is not stored")
         return False
+    
+    # Check if there's a property with setter defined
+    property_lines = []
+    in_property = False
+    for i, line in enumerate(lines):
+        if '@property' in line and i < len(lines) - 1 and 'config_entry' in lines[i+1]:
+            in_property = True
+        elif in_property:
+            if line.strip().startswith('@') or (line.strip().startswith('def ') and 'config_entry' not in line):
+                in_property = False
+            else:
+                property_lines.append(line)
+    
+    if '@config_entry.setter' in content:
+        print("✓ config_entry property has a setter (prevents AttributeError)")
     
     print("✓ Ada12OptionsFlowHandler.__init__ has correct structure")
     return True
