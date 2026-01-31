@@ -1,6 +1,6 @@
 {
   "domain": "adap1ii",
-  "name": "ADA Family Meters VII",
+  "name": "ADA Family Meters II",
   "codeowners": ["@Iminet72"],
   "config_flow": true,
   "dependencies": [],
@@ -16,5 +16,5 @@
       "modelName": "ADA"
     }
   ],
-  "version": "1.1.0"
+  "version": "1.0.5"
 }
