@@ -4,10 +4,10 @@
   "codeowners": ["@Iminet72"],
   "config_flow": true,
   "dependencies": [],
-  "documentation": "https://github.com/bhsoft/adap1meter",
+  "documentation": "https://github.com/Iminet72/ADAP1meter_II",
   "iot_class": "local_polling",
   "icon": "mdi:transmission-tower-import",
-  "issue_tracker": "https://github.com/bhsoft/adap1meter/issues",
+  "issue_tracker": "https://github.com/Iminet72/ADAP1meter_II/issues",
   "requirements": ["aiohttp"],
   "ssdp": [
     {
