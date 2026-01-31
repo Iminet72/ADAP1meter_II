@@ -1,6 +1,6 @@
 {
-  "name": "ADA Family Meters",
-  "homeassistant": "2022.12.0",
+  "name": "ADA Family Meters V II",
+  "homeassistant": "2026.01.0",
   "render_readme": true,
   "domains": ["sensor"],
   "iot_class": "local_polling",
