@@ -1,5 +1,5 @@
 {
-  "name": "ADA Family Meters V II",
+  "name": "ADA Family Meters II",
   "homeassistant": "2026.01.0",
   "render_readme": true,
   "domains": ["sensor"],
