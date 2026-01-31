@@ -79,7 +79,17 @@ class Ada12ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 class Ada12OptionsFlowHandler(config_entries.OptionsFlow):
     def __init__(self, config_entry):
         super().__init__()
-        self.config_entry = config_entry
+        self._config_entry_data = config_entry
+    
+    @property
+    def config_entry(self):
+        """Return the config entry."""
+        return self._config_entry_data
+    
+    @config_entry.setter
+    def config_entry(self, value):
+        """Set the config entry."""
+        self._config_entry_data = value
 
     async def async_step_init(self, user_input=None):
         if user_input is not None:
