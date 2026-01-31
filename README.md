@@ -3,7 +3,7 @@
 ![HACS Default](https://img.shields.io/badge/HACS-Default-orange.svg?style=flat-square)
 ![Home Assistant](https://img.shields.io/badge/Supports-Home%20Assistant-blue?style=flat-square)
 ![HACS Supported](https://img.shields.io/badge/HACS-Supported-41BDF5?style=flat-square)
-![GitHub release (latest by date)](https://img.shields.io/github/v/release/greenhess/adap1meter?style=flat-square)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/greenhess/adap1meter_II?style=flat-square)
 ![Version](https://img.shields.io/badge/dynamic/json?url=https://raw.githubusercontent.com/greenhess/adap1meter/main/custom_components/greenhess/manifest.json&query=$.version&label=version&color=blue)
 ![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green?style=flat-square)
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)
@@ -126,8 +126,8 @@ Issues with mDNS and `.local` domain resolution may occur on certain systems. Th
 Note: If you use same 2 or more devices on your local network (e.g: 2 or more ADA P1 Meter), just use ip address do not use mDNS.
 
 ---
-
-Béta-Teszt verzió
+Ez egy módosított verzió. több eszközt kezel.
+A 
 
 
 ## License
