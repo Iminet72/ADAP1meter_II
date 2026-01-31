@@ -1,7 +1,7 @@
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 
-DOMAIN = "greenhess"
+DOMAIN = "bhsoft"
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
     """Set up Ada12 from a config entry."""

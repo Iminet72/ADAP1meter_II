@@ -13,7 +13,7 @@ This is a modified version for easier handling, more devices can be managed with
 
 You can find the original here:
 
-https://github.com/greenhess/adap1meter
+https://github.com/bhsoft/adap1meter
 
 ## License
 

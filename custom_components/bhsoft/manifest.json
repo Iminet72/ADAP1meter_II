@@ -1,18 +1,18 @@
 {
-  "domain": "greenhess",
+  "domain": "bhsoft",
   "name": "ADA Family Meters VII",
   "codeowners": ["@Iminet72"],
   "config_flow": true,
   "dependencies": [],
-  "documentation": "https://github.com/@greenhess/adap1meter",
+  "documentation": "https://github.com/@bhsoft/adap1meter",
   "iot_class": "local_polling",
   "icon": "mdi:transmission-tower-import",
-  "issue_tracker": "https://github.com/greenhess/adap1meter/issues",
+  "issue_tracker": "https://github.com/bhsoft/adap1meter/issues",
   "requirements": ["aiohttp"],
   "ssdp": [
     {
       "st": "urn:schemas-upnp-org:device:Basic:1",
-      "manufacturer": "GreenHESS",
+      "manufacturer": "BHsoft",
       "modelName": "ADA"
     }
   ],
