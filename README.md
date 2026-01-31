@@ -13,7 +13,9 @@ This is a modified version for easier handling, more devices can be managed with
 
 You can find the original here:
 
-https://github.com/Iminet72/ADAP1meter_II
+(https://github.com/greenhess/adap1meter)
+
+Thanks for Grennhess Kft
 
 ## License
 
