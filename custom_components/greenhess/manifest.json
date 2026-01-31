@@ -1,6 +1,6 @@
 {
   "domain": "greenhess",
-  "name": "ADA Family Meters",
+  "name": "ADA Family Meters VII",
   "codeowners": ["@greenhess"],
   "config_flow": true,
   "dependencies": [],
