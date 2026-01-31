@@ -13,8 +13,11 @@ def test_options_flow_handler_init():
     """Test that Ada12OptionsFlowHandler can be initialized with correct pattern."""
     # We can't fully test this without Home Assistant, but we can verify the class structure
     
-    # Read the config_flow.py file
-    with open('custom_components/adap1ii/config_flow.py', 'r') as f:
+    # Read the config_flow.py file using absolute path
+    config_flow_path = os.path.join(
+        os.path.dirname(__file__), '..', 'custom_components/adap1ii/config_flow.py'
+    )
+    with open(config_flow_path, 'r') as f:
         content = f.read()
     
     # Check that the __init__ method has the correct structure
