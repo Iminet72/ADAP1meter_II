@@ -20,5 +20,3 @@ Thanks for Grennhess Kft
 ## License
 
 This project is licensed under the MIT License.
-
-![ADA P1 Meter Icon](images/icon.png)
