@@ -233,25 +233,25 @@ PRODUCT_CONFIGS = {
             "unit": "",
             "friendly_name": "Teljesítménytényező",
             "icon": "mdi:cosine-wave",
-            "state_class: "measurement"
+            "state_class": "measurement"
         },
         "power_factor_l1": {
             "unit": "",
             "friendly_name": "Teljesítménytényező L1",
             "icon": "mdi:cosine-wave",
-            "state_class: "measurement"
+            "state_class": "measurement"
         },
         "power_factor_l2": {
             "unit": "",
             "friendly_name": "Teljesítménytényező L2",
             "icon": "mdi:cosine-wave",
-            "state_class: "measurement"
+            "state_class": "measurement"
         },
         "power_factor_l3": {
             "unit": "",
             "friendly_name": "Teljesítménytényező L3",
             "icon": "mdi:cosine-wave",        
-            "state_class: "measurement"
+            "state_class": "measurement"
         },
 
         # Egyéb
@@ -305,25 +305,25 @@ PRODUCT_CONFIGS = {
                 "unit": "",
                 "friendly_name": "Teljesítménytényező",
                 "icon": "mdi:cosine-wave",
-                "state_class: "measurement"
+                "state_class": "measurement"
             },
             "power_factor_l1": {
                 "unit": "",
                 "friendly_name": "Teljesítménytényező (L1)",
                 "icon": "mdi:cosine-wave",
-                "state_class: "measurement"
+                "state_class": "measurement"
             },
             "power_factor_l2": {
                 "unit": "",
                 "friendly_name": "Teljesítménytényező (L2)",
                 "icon": "mdi:cosine-wave",
-                "state_class: "measurement"
+                "state_class": "measurement"
             },
             "power_factor_l3": {
                 "unit": "",
                 "friendly_name": "Teljesítménytényező (L3)",
                 "icon": "mdi:cosine-wave",
-                "state_class: "measurement"
+                "state_class": "measurement"
             },
             "voltage_phase_l1": {
                 "unit": "V",
@@ -455,7 +455,7 @@ PRODUCT_CONFIGS = {
                 "unit": "",
                 "friendly_name": "Teljesítménytényező (L1)",
                 "icon": "mdi:cosine-wave",
-                "state_class: "measurement"
+                "state_class": "measurement"
             },
             "active_power_import": {
                 "unit": "kW",
