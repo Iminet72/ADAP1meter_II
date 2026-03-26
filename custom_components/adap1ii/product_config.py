@@ -111,13 +111,13 @@ PRODUCT_CONFIGS = {
             "unit": "kW",
             "friendly_name": "Pillanatnyi importált teljesítmény",
             "icon": "mdi:flash",
-            "_class": "measurement"
+            "state_class": "measurement"
         },
         "instantaneous_power_export": {
             "unit": "kW",
             "friendly_name": "Pillanatnyi exportált teljesítmény",
             "icon": "mdi:flash",
-            "_class": "measurement"
+            "state_class": "measurement"
         },
         "instantaneous_power_import_l1": {
             "unit": "kW",
