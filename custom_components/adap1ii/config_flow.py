@@ -73,24 +73,10 @@ class Ada12ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     @staticmethod
     @callback
     def async_get_options_flow(config_entry):
-        return Ada12OptionsFlowHandler(config_entry)
+        return Ada12OptionsFlowHandler()
 
 
 class Ada12OptionsFlowHandler(config_entries.OptionsFlow):
-    def __init__(self, config_entry):
-        super().__init__()
-        self._config_entry_data = config_entry
-    
-    @property
-    def config_entry(self):
-        """Return the config entry."""
-        return self._config_entry_data
-    
-    @config_entry.setter
-    def config_entry(self, value):
-        """Set the config entry."""
-        self._config_entry_data = value
-
     async def async_step_init(self, user_input=None):
         if user_input is not None:
             return self.async_create_entry(title="", data=user_input)

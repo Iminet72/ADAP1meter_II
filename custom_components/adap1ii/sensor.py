@@ -3,7 +3,6 @@ import aiohttp
 import async_timeout
 from datetime import timedelta
 
-from homeassistant.helpers.entity import Entity
 from homeassistant.helpers.update_coordinator import (
     CoordinatorEntity,
     DataUpdateCoordinator,
@@ -12,7 +11,7 @@ from homeassistant.helpers.update_coordinator import (
 
 from .product_config import get_product_sensors, get_product_name
 
-from homeassistant.components.sensor import SensorEntity
+from homeassistant.components.sensor import SensorEntity, SensorStateClass, SensorDeviceClass
 
 _LOGGER = logging.getLogger(__name__)
 SCAN_INTERVAL = timedelta(seconds=10)
@@ -75,7 +74,7 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
     async_add_entities(sensors)
 
 
-class Ada12Sensor(CoordinatorEntity, Entity):
+class Ada12Sensor(CoordinatorEntity, SensorEntity):
     ENERGY_SENSORS = ["active_import_energy_total", "active_export_energy_total"]
 
     def __init__(self, coordinator, product_type, sensor_key, sensor_config, unique_id, prefix, name, device_id):
@@ -86,22 +85,24 @@ class Ada12Sensor(CoordinatorEntity, Entity):
         self._unique_id = unique_id
         self._prefix = prefix
         self._name = name
-        self._device_id = device_id 
-        self._attributes = {"icon": sensor_config["icon"]}
-        self._attributes["uid"] = unique_id  #extra sor az attributes-ba
+        self._device_id = device_id
+        self._attr_icon = sensor_config["icon"]
+        self._extra_attrs = {"uid": unique_id}
 
-        # Energy panelhez szükséges beállítás  
+        # Energy panelhez szükséges beállítás
         state_class = sensor_config.get("state_class")
         if state_class == "total_increasing" or sensor_key in self.ENERGY_SENSORS:
-            self._attributes["device_class"] = "energy"
-            self._attributes["state_class"] = "total_increasing"
-            self._attributes["unit_of_measurement"] = "kWh"
+            self._attr_device_class = SensorDeviceClass.ENERGY
+            self._attr_state_class = SensorStateClass.TOTAL_INCREASING
+            self._attr_native_unit_of_measurement = "kWh"
         elif state_class == "measurement":
-            self._attributes["device_class"] = "power"
-            self._attributes["state_class"] = "measurement"
-            self._attributes["unit_of_measurement"] = sensor_config.get("unit", "")
-        elif sensor_config["unit"]:
-            self._attributes["unit_of_measurement"] = sensor_config["unit"]
+            self._attr_state_class = SensorStateClass.MEASUREMENT
+            unit = sensor_config.get("unit", "")
+            self._attr_native_unit_of_measurement = unit
+            if unit == "kW":
+                self._attr_device_class = SensorDeviceClass.POWER
+        elif sensor_config.get("unit"):
+            self._attr_native_unit_of_measurement = sensor_config["unit"]
 
     @property
     def name(self):
@@ -121,11 +122,13 @@ class Ada12Sensor(CoordinatorEntity, Entity):
         }      
             
     @property
-    def state(self):
+    def native_value(self):
         data = self.coordinator.data or {}
-        return data.get(self._sensor_key, 0 if self._sensor_config["unit"] else "")
+        if self._sensor_key not in data:
+            return None
+        return data[self._sensor_key]
 
     @property
     def extra_state_attributes(self):
-        return self._attributes
+        return self._extra_attrs
 
