@@ -1,8 +1,10 @@
+import asyncio
 import logging
-import aiohttp
+import time
 import async_timeout
 from datetime import timedelta
 
+from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from homeassistant.helpers.update_coordinator import (
     CoordinatorEntity,
     DataUpdateCoordinator,
@@ -15,6 +17,14 @@ from homeassistant.components.sensor import SensorEntity, SensorStateClass, Sens
 
 _LOGGER = logging.getLogger(__name__)
 SCAN_INTERVAL = timedelta(seconds=10)
+
+# The meter regularly answers {"error": "No v2 data available yet"} while it refreshes its P1
+# telegram, and its WiFi drops the odd request. Retry briefly, then keep showing the last good
+# reading for a short while instead of turning every sensor unknown/unavailable for a poll.
+REQUEST_TIMEOUT = 5  # s per attempt
+RETRIES = 2  # extra attempts after the first one
+RETRY_DELAY = 1.0  # s between attempts
+HOLD_LAST_GOOD = 60  # s a stale reading may be served before the sensors go unavailable
 
 
 async def async_setup_entry(hass, config_entry, async_add_entities):
@@ -36,14 +46,37 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
     product_sensors = get_product_sensors(product_type)
     product_name = get_product_name(product_type)
 
+    session = async_get_clientsession(hass)
+    last_good = {"data": None, "ts": 0.0}
+
+    async def fetch_once():
+        async with async_timeout.timeout(REQUEST_TIMEOUT):
+            async with session.get(url) as response:
+                response.raise_for_status()
+                data = await response.json(content_type=None)
+        if not isinstance(data, dict):
+            raise ValueError("unexpected response")
+        if "error" in data:  # e.g. "No v2 data available yet"
+            raise ValueError(data["error"])
+        return data
+
     async def async_update_data():
-        try:
-            async with aiohttp.ClientSession() as session:
-                async with async_timeout.timeout(10):
-                    async with session.get(url) as response:
-                        return await response.json()
-        except Exception as err:
-            raise UpdateFailed(f"Error fetching data from {url}: {err}") from err
+        last_err = None
+        for attempt in range(1 + RETRIES):
+            try:
+                data = await fetch_once()
+                last_good["data"], last_good["ts"] = data, time.monotonic()
+                return data
+            except Exception as err:  # noqa: BLE001 - any failure is retried the same way
+                last_err = err
+                if attempt < RETRIES:
+                    await asyncio.sleep(RETRY_DELAY)
+
+        age = time.monotonic() - last_good["ts"]
+        if last_good["data"] is not None and age < HOLD_LAST_GOOD:
+            _LOGGER.debug("%s: %s, keeping the reading from %.0f s ago", url, last_err, age)
+            return last_good["data"]
+        raise UpdateFailed(f"Error fetching data from {url}: {last_err}") from last_err
 
     coordinator = DataUpdateCoordinator(
         hass,
@@ -53,7 +86,10 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
         update_interval=SCAN_INTERVAL,
     )
 
-    await coordinator.async_config_entry_first_refresh()
+    # Not async_config_entry_first_refresh(): raising ConfigEntryNotReady from a forwarded
+    # platform is not retried by HA, so a meter that was offline at startup stayed unavailable
+    # until a manual reload. The entities are added either way and recover on the next poll.
+    await coordinator.async_refresh()
 
     sensors = []
     for sensor_key, sensor_config in product_sensors.items():
